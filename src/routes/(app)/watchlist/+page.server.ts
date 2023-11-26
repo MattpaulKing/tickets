@@ -5,21 +5,31 @@ export const actions = {
   add: async ({ request, locals }) => {
     const data = Object.fromEntries(await request.formData())
     const session  = await locals.getSession()
-    if (!data.eventId || !session) return fail(400, { message: "Please try again" })
-    const { error: err } = await locals.supabase.from("watchlist").insert({eventId: data.eventId, userId: session?.user.id})
-    if (err) return fail(400, { message: "Please try again." })
-    return { success: true }
+    const eventId = parseInt(data.eventId.toString())
+    if (!eventId || !session) {
+      return fail(400, { message: "Please try again" })
+    } 
+    const { error: err } = await locals.supabase.from("watchlist")
+      .insert({eventId: eventId, userId: session?.user.id})
+
+    if (err) {
+      return fail(400, { message: "Please try again." })
+    } 
+    return { action: 'add' }
   },
   remove: async ({ request, locals }) => {
-    const data = await request.formData()
-    const eventId = data.get("eventId")
-    if (!eventId) return fail(400, { message: "Please try again" })
-    const { error: err } = await locals.supabase.from("Watchlist")
-      .delete()
-      .eq('eventId', eventId)
+    const data = Object.fromEntries(await request.formData())
+    if (!data.eventId) {
+      return fail(400, { message: "Please try again" })
+    }
 
-    if (err) return fail(400, { message: "Please try again." })
-    return { success: true }
+    const { error: err } = await locals.supabase.from("watchlist")
+      .delete()
+      .eq('eventId', data.eventId)
+    if (err) {
+      return fail(400, { message: "Please try again." })
+    } 
+    return { action: 'remove' }
   }
 } satisfies Actions
 

@@ -7,7 +7,6 @@
 	let { data } = $props();
 	let watchlist = createWatchlist(data.watchlist);
 	setContext('watchlist', watchlist);
-	console.log(watchlist.ids);
 </script>
 
 <div class="flex flex-col">

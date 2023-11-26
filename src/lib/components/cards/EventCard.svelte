@@ -1,15 +1,18 @@
 <script lang="ts">
-	import type { Tables } from '$lib/types/db';
+	import type { Functions } from '$lib/types/db';
 	import WatchlistButton from '$lib/components/watchlist/WatchlistButton.svelte';
 	let { event } = $props<{
-		event: Tables<'sgEventsUpcoming'>;
+		event: Functions<'just_announced_by_type_details'>[0];
 	}>();
 </script>
 
 <article class="card w-96 bg-base-300 shadow-2xl rounded-xl">
 	<div class="card-body">
-		<div class="flex flex-nowrap justify-between w-60">
-			<h3 class="card-title text-left tooltip tooltip-info w-min truncate" data-tip={event.title}>
+		<div class="grid grid-cols-5 gap-2">
+			<h3
+				class="col-span-4 card-title text-left tooltip tooltip-info truncate"
+				data-tip={event.title}
+			>
 				{event.title?.replaceAll('_', ' ')}
 			</h3>
 			<WatchlistButton eventId={event.eventId} />

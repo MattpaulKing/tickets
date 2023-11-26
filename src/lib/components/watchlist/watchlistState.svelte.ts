@@ -1,26 +1,29 @@
-export default function watchlistState(initial: number[]) {
-  let watchlist = $state(initial)
-  function add(eventId: number) {
-    watchlist = [...watchlist, eventId]
+export class WatchlistState {
+  ids = $state([-1])
+  constructor(initial: number[]){
+    this.ids = initial
   }
-  function remove(eventId: number) {
-    const idx = watchlist.indexOf(eventId)
+  set(eventIds: number[]) {
+    this.ids = eventIds;
+  }
+  add(eventId: number) {
+    this.ids = [...this.ids, eventId]
+  }
+  remove(eventId: number) {
+    const idx = this.ids.indexOf(eventId)
     if (idx > -1) {
-      watchlist.splice(idx, 1)
+      this.ids.splice(idx, 1)
     }
   }
-  function has(eventId: number) {
-    const idx = watchlist.indexOf(eventId) 
+  has(eventId: number) {
+    const idx = this.ids.indexOf(eventId) 
     if (idx > -1) return true
     return false 
   }
-  return {
-   get watchlist() {
-     return watchlist
-   },
-   add,
-   remove,
-   has
+  get() {
+    return this.ids
   }
 }
-export type WatchlistState = ReturnType<typeof watchlistState>
+export const createWatchlist = (initial: number[]) => {
+  return new WatchlistState(initial)
+}

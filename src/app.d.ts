@@ -9,7 +9,6 @@ declare global {
 	  	pathname: string
 	    }
     interface PageData {
-      session: Session | null
     }
 	  // interface Error {}
 	  // interface Platform {}

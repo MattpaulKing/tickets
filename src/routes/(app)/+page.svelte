@@ -2,7 +2,12 @@
 	import EventCard from '$lib/components/cards/EventCard.svelte';
 	import KpiCard from '$lib/components/cards/KpiCard.svelte';
 	import LineChart from '$lib/components/cards/LineChart.svelte';
+	import { createWatchlist } from '$lib/components/watchlist/watchlistState.svelte.js';
+	import { setContext } from 'svelte';
 	let { data } = $props();
+	let watchlist = createWatchlist(data.watchlist);
+	setContext('watchlist', watchlist);
+	console.log(watchlist.ids);
 </script>
 
 <div class="flex flex-col">

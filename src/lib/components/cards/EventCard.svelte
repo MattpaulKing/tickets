@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { Tables } from '$lib/types/db';
 	import WatchlistButton from '$lib/components/watchlist/WatchlistButton.svelte';
-	let { event } = $props<{ event: Tables<'sgEventsUpcoming'> }>();
+	let { event } = $props<{
+		event: Tables<'sgEventsUpcoming'>;
+	}>();
 </script>
 
 <article class="card w-96 bg-base-300 shadow-2xl rounded-xl">

@@ -1,5 +1,9 @@
 import { fail, type Actions } from "@sveltejs/kit"
 import type { PageServerLoad } from "./$types"
+import { watchlistEvents } from "$lib/queries"
+
+//TODO: Remove ssr false
+export const ssr = false;
 
 export const actions = {
   add: async ({ request, locals }) => {
@@ -34,5 +38,7 @@ export const actions = {
 } satisfies Actions
 
 export const load: PageServerLoad = async ({ locals }) => {
-
+  return {
+    watchlistEvents: watchlistEvents(locals)
+  }
 }

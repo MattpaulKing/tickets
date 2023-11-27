@@ -1,47 +1,38 @@
 <script lang="ts">
 	import * as echarts from 'echarts';
-	import type { Functions, KpiFact } from '$lib/types/db';
+	import type { KpiFact, Tables } from '$lib/types/db';
 	import KpiAction from './KpiAction.svelte';
-	type ChartData = Record<string, Functions<'event_type_aggs_by_month'>>;
+	type ChartData = { eventId: number; watchedEvents: Tables<'sgEventsUpcoming'>[] };
 	let { chartData } = $props<{ chartData: ChartData }>();
 	let chartContainer: HTMLDivElement;
 	let fact = $state<KpiFact>('averagePrice');
 
 	$effect(() => {
-		let datasets = [];
-		let series = [];
-		let idx = 0;
-		for (const prop in chartData) {
-			datasets.push({
-				dimensions: ['created_at', fact],
-				source: chartData[prop]
-			});
-			series.push({
-				name: prop,
-				type: 'line',
-				datasetIndex: idx,
-				smooth: true
-			});
-			idx++;
-		}
 		let chart = echarts.init(chartContainer, 'walden', { renderer: 'canvas' });
 		let option = {
-			dataset: datasets,
+			dataset: {
+				dimensions: ['created_at', fact],
+				source: chartData
+			},
+			series: {
+				name: chartData.watchedEvents[0].title ?? 'Unknown',
+				type: 'line',
+				smooth: true
+			},
 			xAxis: {
 				type: 'time',
 				splitLine: {
-					show: false
+					show: true
 				}
 			},
 			yAxis: {
 				type: 'value',
 				splitLine: {
-					show: false
+					show: true
 				},
 				axisLine: {
 					show: true
 				},
-				min: 'dataMin',
 				axisLabel: {
 					showMinLabel: false,
 					showMaxLabel: false,
@@ -73,8 +64,7 @@
 				textStyle: {
 					color: '#ffffff'
 				}
-			},
-			series: series
+			}
 		};
 		chart.setOption(option);
 	});

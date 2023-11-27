@@ -7,6 +7,7 @@
 	let { data } = $props();
 	let watchlist = createWatchlist(data.watchlist);
 	setContext('watchlist', watchlist);
+	console.log(data.eventTypeAggs);
 </script>
 
 <div class="flex flex-col">

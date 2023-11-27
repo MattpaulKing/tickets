@@ -9,6 +9,9 @@ export function kpiOptions(fact: string, chartData: Functions<"event_type_aggs_b
 			xAxis: {
 				type: 'time',
         min: 'dataMin',
+        splitLine: {
+          show: false
+        },
 			},
 			yAxis: {
 				type: 'value',
@@ -46,7 +49,6 @@ export function kpiOptions(fact: string, chartData: Functions<"event_type_aggs_b
 				{
           name: chartData[0].eventType,
 					type: 'line',
-					color: '#f6d860',
           smooth: true,
 				}
 			]

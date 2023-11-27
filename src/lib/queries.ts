@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit"
-import type { Functions, DbResult } from "$lib/types/db"
+import type { Functions, DbResult, Tables } from "$lib/types/db"
 import { groupBy } from "./utils"
 
 export const eventTypeAggs = async (locals: App.Locals) => {
@@ -10,9 +10,9 @@ export const eventTypeAggs = async (locals: App.Locals) => {
   return groupBy<Functions<"event_type_aggs_by_month">>(data, 'eventType')
 }
 
-export const newEventDetails = async (locals: App.Locals): Promise<Functions<"just_announced_by_type_details">> => {
+export const newEventDetails = async (locals: App.Locals): Promise<Functions<"new_event_details">> => {
   const { data, error: err } =
-    await locals.supabase.rpc("just_announced_by_type_details") as DbResult<Functions<"just_announced_by_type_details">>
+    await locals.supabase.rpc("new_event_details") as DbResult<Functions<"new_event_details">>
   if (err) {
     throw error(500, err)
   }
@@ -25,4 +25,12 @@ export const watchlist = async (locals: App.Locals) => {
     throw error(500, "Watchlist couldn't be loaded, please try again")
   }
   return query.data.map(({ eventId }: { eventId: number }) => eventId)
+}
+
+export const watchlistEvents = async (locals: App.Locals) => {
+  const query = await locals.supabase.rpc("watchlist_events").select("*")
+  if (query.error) {
+    throw error(500, "Watchlist couldn't be loaded, please try again")
+  }
+  return query.data as { eventId: number; watchedEvents: Tables<"sgEventsUpcoming">[] }[]
 }

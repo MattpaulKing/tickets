@@ -7,6 +7,6 @@
 	}>();
 </script>
 
-<button onclick={select} class="badge {activeFact === fact ? 'badge-warning' : 'badge-outline'}"
+<button onclick={select} class="badge {activeFact === fact ? 'badge-neutral ' : 'badge-outline'}"
 	>{label}</button
 >

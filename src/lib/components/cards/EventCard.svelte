@@ -8,7 +8,7 @@
 
 <article class="card w-96 bg-base-300 shadow-2xl rounded-xl">
 	<div class="card-body">
-		<div class="grid grid-cols-5 gap-2">
+		<div class="grid grid-cols-5 gap-2 place-content-baseline">
 			<h3
 				class="col-span-4 card-title text-left tooltip tooltip-info truncate"
 				data-tip={event.title}

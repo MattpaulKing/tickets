@@ -35,9 +35,9 @@
 		>
 			<input type="hidden" name="eventId" value={eventId} />
 			<button
-				class="btn btn-sm btn-accent {isWatched
-					? ''
-					: 'btn-outline fill-base-content hover:fill-black'}"
+				class="btn btn-xs h-10 [&>svg]:hover:fill-black {isWatched
+					? 'btn-accent [&>svg]:fill-black'
+					: 'btn-accent btn-outline'}"
 			>
 				<WatchedIcon />
 			</button>

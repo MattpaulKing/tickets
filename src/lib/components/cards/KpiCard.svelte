@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Functions, KpiFact } from '$lib/types/db';
 	import * as echarts from 'echarts';
+	import theme from '$lib/components/charts/chartTheme';
 	import { kpiOptions } from './KpiChartOptions';
 	import KpiAction from './KpiAction.svelte';
 	type Props = { title: string; chartData: Functions<'event_type_aggs_by_month'> };
@@ -8,7 +9,8 @@
 	let chartContainer: HTMLDivElement;
 	let fact = $state<KpiFact>('averagePrice');
 	$effect(() => {
-		let chart = echarts.init(chartContainer);
+		echarts.registerTheme('walden', theme);
+		let chart = echarts.init(chartContainer, 'walden');
 		let option = kpiOptions(fact, chartData);
 		chart.setOption(option);
 	});

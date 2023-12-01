@@ -2,7 +2,7 @@
 	import type { Functions } from '$lib/types/db';
 	import WatchlistButton from '$lib/components/watchlist/WatchlistButton.svelte';
 	let { event } = $props<{
-		event: Functions<'just_announced_by_type_details'>[0];
+		event: Functions<'new_event_details'>[0];
 	}>();
 </script>
 
@@ -13,12 +13,12 @@
 				class="col-span-4 card-title text-left tooltip tooltip-info truncate"
 				data-tip={event.title}
 			>
-				{event.title?.replaceAll('_', ' ')}
+				{event.title}
 			</h3>
 			<WatchlistButton eventId={event.eventId} />
 		</div>
 		<span class="text-base text-gray-300 text-left capitalize"
-			>{event.eventType.replaceAll('_', ' ')} in {event.state}</span
+			>{event.eventType.replaceAll('_', ' ')} in {event.state} - {event.eventDate}</span
 		>
 		<div class="flex flex-wrop flex-wrap gap-x-4">
 			<span>Average: {event.averagePrice ?? '-'}</span>

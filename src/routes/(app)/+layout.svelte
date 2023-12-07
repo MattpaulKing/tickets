@@ -1,6 +1,11 @@
 <script lang="ts">
 	import WatchedIcon from '$lib/icons/WatchedIcon.svelte';
 	import '../../app.css';
+	import { createWatchlist } from '$lib/components/watchlist/watchlistState.svelte.js';
+	import { setContext } from 'svelte';
+	let { data } = $props();
+	let watchlist = createWatchlist(data.watchlist);
+	setContext('watchlist', watchlist);
 	//TODO: active state for links
 </script>
 
